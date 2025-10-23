@@ -52,7 +52,13 @@
             justify-content: center;
             overflow-y: auto;
         }
-
+.image-content {
+    width: 45%; /* Ocupa el 45% fijo */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex-shrink: 0; /* Evita que se reduzca */
+}
 .image-content img {
     width: 45%;
     height: 100%;
