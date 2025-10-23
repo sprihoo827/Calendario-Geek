@@ -310,6 +310,17 @@
                 // Separar configuración (día 0) y eventos de hoy
 defaultConfig = rows.find(row => row.dia === "0" && row.mes === "0");
 
+console.log('=== BUSCANDO EVENTOS DE HOY ===');
+console.log('Hoy:', todayDay + '/' + todayMonth);
+
+events = rows.filter(row => {
+    console.log('Revisando fila:', row);
+    const isNotConfig = row.dia !== "0";
+    const isToday = row.dia === todayDay && row.mes === todayMonth;
+    console.log('¿Coincide?', isToday);
+    return isNotConfig && isToday;
+});
+
 events = rows.filter(row => {
     if (!row.dia || !row.mes) return false;
     
