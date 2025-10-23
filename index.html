@@ -82,10 +82,11 @@
     flex-direction: column;
 }
 
-.image-content img {
+.image-vertical img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain; /* Cambiar solo en móvil */
+    flex: 1;
 }
  
 
