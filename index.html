@@ -414,7 +414,8 @@ function displayEvent(event, index) {
     } 
     // Si no hay imagen, usar la configuración por defecto
     else if (defaultConfig?.imagen) {
-        imageSource = './images/' + encodeURIComponent(defaultConfig.imagen);
+//        imageSource = './images/' + encodeURIComponent(defaultConfig.imagen);
+        imageSource = './images/' + encodeURI(event.imagen);
         sourceAttribution = defaultConfig.licencia || '';
         console.log('Usando imagen por defecto:', imageSource);
     } else {
