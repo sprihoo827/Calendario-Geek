@@ -11,7 +11,199 @@
             --accent-color: #ffc300;
             --text-color: #f7f7f7;
         }
-        /* ... [TODO EL CSS ANTERIOR] ... */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Layout principal - se adapta según orientación */
+        .content-main {
+            display: flex;
+            flex: 1;
+        }
+
+        /* Layout horizontal (escritorio y móvil landscape) */
+        .layout-horizontal {
+            flex-direction: row;
+            height: 100vh;
+        }
+
+        .text-content {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow-y: auto;
+        }
+
+        .image-content {
+            width: 45%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .image-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Layout vertical (móvil portrait) - CONTENIDO CENTRADO */
+        .layout-vertical {
+            flex-direction: column;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .image-vertical {
+            width: 100%;
+            height: 40vh;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .image-vertical img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            flex: 1;
+        }
+
+        .text-vertical {
+            flex: 1;
+            padding: 30px 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+            text-align: center;
+        }
+
+        .text-vertical-content {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Estilos de texto */
+        h1 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            color: var(--text-color);
+            margin-bottom: 15px;
+            font-weight: 300;
+            text-align: center;
+            width: 100%;
+        }
+
+        .title-emphasis {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: bold;
+            color: var(--accent-color);
+            margin: 25px 0;
+            line-height: 1.2;
+            text-align: center;
+            width: 100%;
+        }
+
+        .description-col {
+            font-size: clamp(1.1rem, 2vw, 1.8rem);
+            line-height: 1.6;
+            color: var(--text-color);
+            text-align: center;
+            width: 100%;
+        }
+
+        .year {
+            font-size: clamp(1rem, 1.8vw, 1.5rem);
+            color: var(--accent-color);
+            margin-top: 20px;
+            font-weight: 600;
+            text-align: center;
+            width: 100%;
+        }
+
+        .image-attribution {
+            font-size: 0.7rem;
+            color: var(--text-color);
+            padding: 12px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.4);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+        }
+
+        .image-attribution-vertical {
+            font-size: 0.7rem;
+            color: var(--text-color);
+            padding: 12px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.4);
+            width: 100%;
+        }
+
+        /* Indicadores de rotación */
+        .rotation-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px;
+            position: absolute;
+            bottom: 50px;
+            left: 0;
+            right: 0;
+            z-index: 20;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
+        }
+
+        .rotation-indicators-vertical {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px;
+            background: rgba(0, 31, 63, 0.8);
+            width: 100%;
+        }
+
+        .indicator {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .indicator.active {
+            background-color: var(--accent-color);
+            transform: scale(1.2);
+        }
 
         /* Spinner de carga */
         .loading-spinner {
@@ -36,6 +228,43 @@
             height: 100vh;
             gap: 20px;
         }
+
+        /* Media Queries */
+        @media (min-width: 1025px), (orientation: landscape) {
+            .content-main {
+                flex-direction: row;
+                height: 100vh;
+            }
+            .layout-vertical {
+                display: none;
+            }
+            .rotation-indicators-vertical {
+                display: none;
+            }
+        }
+
+        @media (max-width: 1024px) and (orientation: portrait) {
+            .content-main {
+                flex-direction: column;
+                min-height: 100vh;
+            }
+            .layout-horizontal {
+                display: none;
+            }
+            .rotation-indicators {
+                display: none;
+            }
+        }
+
+        /* Animaciones */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -52,52 +281,92 @@
         const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSTU-AKZ_aGs10aT7lT59Hm7H2MUe82TeQxeIjcsJ8XSm6-hrFjQEKyPezeq9lBouSgBPqT_gL3cH-Z/pub?gid=0&single=true&output=tsv";
         
         let events = [];
-        let defaultImage = "";
-        let defaultLicense = "";
+        let defaultConfig = null;
         const ROTATION_TIME_MS = 10000;
 
         const container = document.getElementById('event-container');
         let currentIndex = 0;
         let rotationInterval;
 
-        // CARGAR DATOS DESDE GOOGLE SHEETS (TSV)
+        // CARGAR DATOS DESDE GOOGLE SHEETS
         async function loadData() {
             try {
-                console.log('Cargando datos...');
-                
                 const response = await fetch(SHEET_URL);
-                if (!response.ok) {
-                    throw new Error(`Error HTTP: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
                 
                 const tsvData = await response.text();
                 const rows = parseTSV(tsvData);
                 
-                // Separar configuración (día 0) y eventos
-                const config = rows.find(row => row.dia === "0");
-                events = rows.filter(row => row.dia !== "0" && row.dia);
+                // Obtener fecha actual
+                const today = new Date();
+                const todayDay = today.getDate().toString();
+                const todayMonth = (today.getMonth() + 1).toString();
                 
-                // Configuración por defecto desde la fila día 0
-                if (config) {
-                    defaultImage = config.imagen || "";
-                    defaultLicense = config.licencia || "";
-                }
+                // Separar configuración (día 0) y eventos de hoy
+                defaultConfig = rows.find(row => row.dia === "0" && row.mes === "0");
+                events = rows.filter(row => row.dia !== "0" && row.dia === todayDay && row.mes === todayMonth);
                 
-                console.log('Eventos cargados:', events);
+                console.log('Eventos de hoy:', events);
+                console.log('Configuración:', defaultConfig);
                 
                 if (events.length > 0) {
+                    // Hay efemérides para hoy - mostrar rotación
                     displayEvent(events[currentIndex], currentIndex);
                     startRotation();
                 } else {
-                    showNoEvents();
+                    // No hay efemérides para hoy - mostrar página con configuración por defecto
+                    showDefaultPage();
                 }
             } catch (error) {
                 console.error('Error:', error);
-                showError(`Error cargando los datos`);
+                showDefaultPage();
             }
         }
 
-        // PARSEAR DATOS TSV CON NUEVO FORMATO
+        // MOSTRAR PÁGINA POR DEFECTO (cuando no hay efemérides)
+        function showDefaultPage() {
+            const defaultImage = defaultConfig?.imagen ? './images/' + encodeURIComponent(defaultConfig.imagen) : '';
+            const defaultLicense = defaultConfig?.licencia || '';
+            
+            const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+            const isDesktop = window.innerWidth >= 1025;
+
+            let html = '';
+
+            if (isLandscape || isDesktop) {
+                html = `
+                    <div class="layout-horizontal content-main fade-in">
+                        <div class="text-content">
+                            <h1>No hay efeméride geek para hoy</h1>
+                            <div class="title-emphasis">¡Vuelve mañana!</div>
+                        </div>
+                        <div class="image-content">
+                            <img src="${defaultImage}" alt="Imagen por defecto" onerror="handleImageError(this)">
+                            ${defaultLicense ? `<div class="image-attribution">${defaultLicense}</div>` : ''}
+                        </div>
+                    </div>
+                `;
+            } else {
+                html = `
+                    <div class="layout-vertical content-main fade-in">
+                        <div class="image-vertical">
+                            <img src="${defaultImage}" alt="Imagen por defecto" onerror="handleImageError(this)">
+                            ${defaultLicense ? `<div class="image-attribution-vertical">${defaultLicense}</div>` : ''}
+                        </div>
+                        <div class="text-vertical">
+                            <div class="text-vertical-content">
+                                <h1>No hay efeméride geek para hoy</h1>
+                                <div class="title-emphasis">¡Vuelve mañana!</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = html;
+        }
+
+        // PARSEAR DATOS TSV
         function parseTSV(tsv) {
             const lines = tsv.split('\n');
             const headers = lines[0].split('\t').map(header => header.trim().toLowerCase());
@@ -116,7 +385,7 @@
             return rows;
         }
 
-        // FUNCIÓN PARA MOSTRAR EVENTO CON NUEVO FORMATO
+        // FUNCIÓN PARA MOSTRAR EVENTO
         function displayEvent(event, index) {
             const eventTitle = event.evento || '';
             const description = event.descripción || '';
@@ -125,25 +394,19 @@
             let sourceAttribution = event.licencia || '';
             
             // Manejo de imágenes
-            let imageSource = '';
+            let imageSource = imageFile ? './images/' + encodeURIComponent(imageFile) : '';
             
-            if (imageFile) {
-                // Construir ruta local con el nombre del archivo
-                imageSource = './images/' + encodeURIComponent(imageFile);
-            } else {
-                // Usar imagen por defecto
-                imageSource = defaultImage ? './images/' + encodeURIComponent(defaultImage) : '';
-                sourceAttribution = defaultLicense;
+            if (!imageSource && defaultConfig?.imagen) {
+                imageSource = './images/' + encodeURIComponent(defaultConfig.imagen);
+                sourceAttribution = defaultConfig.licencia || '';
             }
 
-            // Detectar orientación
             const isLandscape = window.matchMedia("(orientation: landscape)").matches;
             const isDesktop = window.innerWidth >= 1025;
 
             let html = '';
 
             if (isLandscape || isDesktop) {
-                // Layout horizontal
                 html = `
                     <div class="layout-horizontal content-main fade-in">
                         <div class="text-content">
@@ -161,7 +424,6 @@
                     </div>
                 `;
             } else {
-                // Layout vertical
                 html = `
                     <div class="layout-vertical content-main fade-in">
                         <div class="image-vertical">
@@ -186,12 +448,10 @@
             attachIndicatorListeners();
         }
 
-        // [MANTENER EL RESTO DE FUNCIONES IGUAL: handleImageError, generateIndicators, etc.]
-
         // MANEJAR ERRORES DE IMAGEN
         function handleImageError(img) {
-            if (defaultImage) {
-                img.src = './images/' + encodeURIComponent(defaultImage);
+            if (defaultConfig?.imagen) {
+                img.src = './images/' + encodeURIComponent(defaultConfig.imagen);
             }
         }
 
@@ -234,26 +494,6 @@
             }
         }
 
-        // MENSAJES DE ERROR
-        function showNoEvents() {
-            container.innerHTML = `
-                <div class="text-content">
-                    <h1>No hay efemérides para mostrar</h1>
-                </div>
-            `;
-        }
-
-        function showError(message) {
-            container.innerHTML = `
-                <div class="text-content">
-                    <h1>Error</h1>
-                    <div class="description-col">
-                        <p>${message}</p>
-                    </div>
-                </div>
-            `;
-        }
-
         // INICIALIZAR
         document.addEventListener('DOMContentLoaded', function() {
             loadData();
@@ -263,6 +503,8 @@
         window.addEventListener('resize', function() {
             if (events.length > 0) {
                 displayEvent(events[currentIndex], currentIndex);
+            } else if (defaultConfig) {
+                showDefaultPage();
             }
         });
 
@@ -270,6 +512,8 @@
             setTimeout(() => {
                 if (events.length > 0) {
                     displayEvent(events[currentIndex], currentIndex);
+                } else if (defaultConfig) {
+                    showDefaultPage();
                 }
             }, 100);
         });
