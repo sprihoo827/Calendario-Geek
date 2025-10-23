@@ -409,8 +409,8 @@ function displayEvent(event, index) {
     
     // Si el evento tiene imagen, usar la local
     if (event.imagen && event.imagen.trim()) {
-       // imageSource = './images/' + encodeURIComponent(event.imagen);
-imageSource = './images/' + event.imagen;
+   imageSource = './images/' + encodeURIComponent(event.imagen);
+//imageSource = './images/' + event.imagen;
         console.log('Usando imagen del evento:', imageSource);
     } 
     // Si no hay imagen, usar la configuración por defecto
