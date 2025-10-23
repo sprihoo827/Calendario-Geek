@@ -314,14 +314,6 @@ console.log('=== BUSCANDO EVENTOS DE HOY ===');
 console.log('Hoy:', todayDay + '/' + todayMonth);
 
 events = rows.filter(row => {
-    console.log('Revisando fila:', row);
-    const isNotConfig = row.dia !== "0";
-    const isToday = row.dia === todayDay && row.mes === todayMonth;
-    console.log('¿Coincide?', isToday);
-    return isNotConfig && isToday;
-});
-
-events = rows.filter(row => {
     if (!row.dia || !row.mes) return false;
     
     const isNotConfig = row.dia.toString().trim() !== "0";
@@ -332,7 +324,7 @@ events = rows.filter(row => {
     return isNotConfig && isToday;
 });
                 events = rows.filter(row => {
-                    const isToday = row.dia === todayDay && row.mes === todayMonth;
+                    const isToday = row.dia === todayDay //&& row.mes === todayMonth;
                     const isNotConfig = row.dia !== "0";
                     return isNotConfig && isToday;
                 });
