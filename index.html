@@ -306,7 +306,7 @@
         events = rows.filter(row => row.dia !== "0" && row.dia === todayDay && row.mes === todayMonth);
         
         console.log('Configuración (día 0):', defaultConfig);
-        console.log('Eventos de hoy encontrados:', events);}
+        console.log('Eventos de hoy encontrados:', events);
             try {
                 const response = await fetch(SHEET_URL);
                 const tsvData = await response.text();
