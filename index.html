@@ -290,10 +290,10 @@
         async function loadData() {
             try {
                 console.log('=== INICIANDO CARGA DE DATOS ===');
-                const response = await fetch(SHEET_URL);
-                if (!response.ok) throw new Error('Error al cargar el Sheet');
+                const sheetResponse = await fetch(SHEET_URL);
+                if (!sheetResponse.ok) throw new Error('Error al cargar el Sheet');
                 
-                const tsvData = await response.text();
+                const tsvData = await sheetResponse.text();
                 console.log('Datos TSV crudos:', tsvData);
                 
                 const rows = parseTSV(tsvData);
