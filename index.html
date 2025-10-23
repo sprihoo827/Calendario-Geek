@@ -286,18 +286,18 @@
         const urlParams = new URLSearchParams(window.location.search);
         const urlDay = urlParams.get('day');
         const urlMonth = urlParams.get('month');
-        console.log('=== PARÁMETROS URL ===');
-        console.log('URL Day:', urlDay);
-        console.log('URL Month:', urlMonth);
+        // console.log('=== PARÁMETROS URL ===');
+        // console.log('URL Day:', urlDay);
+        // console.log('URL Month:', urlMonth);
 
         // FILTRAR POR FECHA ACTUAL O PARÁMETROS
         const today = new Date();
         const todayDay = urlDay ? urlDay.toString() : today.getDate().toString();
         const todayMonth = urlMonth ? urlMonth.toString() : (today.getMonth() + 1).toString();
 
-        console.log('=== FECHA USADA ===');
-        console.log('Día usado:', todayDay);
-        console.log('Mes usado:', todayMonth);
+        // console.log('=== FECHA USADA ===');
+        // console.log('Día usado:', todayDay);
+        // console.log('Mes usado:', todayMonth);
         
         let events = [];
         let defaultConfig = null;
@@ -309,12 +309,12 @@
 
         async function loadData() {
             try {
-                console.log('=== INICIANDO CARGA DE DATOS ===');
+                // console.log('=== INICIANDO CARGA DE DATOS ===');
                 const sheetResponse = await fetch(SHEET_URL);
                 if (!sheetResponse.ok) throw new Error('Error al cargar el Sheet');
                 
                 const tsvData = await sheetResponse.text();
-                console.log('Datos TSV crudos:', tsvData);
+                // console.log('Datos TSV crudos:', tsvData);
                 
                 const rows = parseTSV(tsvData);
                 
@@ -323,31 +323,31 @@
                 const todayDay = today.getDate().toString();
                 const todayMonth = (today.getMonth() + 1).toString();
                 
-                console.log('=== INFORMACIÓN DE FECHA ===');
-                console.log('Hoy es:', todayDay + '/' + todayMonth);
-                console.log('Todos los registros del Sheet:', rows);
+                // console.log('=== INFORMACIÓN DE FECHA ===');
+                // console.log('Hoy es:', todayDay + '/' + todayMonth);
+                // console.log('Todos los registros del Sheet:', rows);
                 
                 // Separar configuración (día 0) y eventos de hoy
-defaultConfig = rows.find(row => row.día === "0" && row.mes === "0");  // día con tilde
+                defaultConfig = rows.find(row => row.día === "0" && row.mes === "0");  // día con tilde
                 
-console.log('=== BUSCANDO EVENTOS DE HOY ===');
-console.log('Hoy:', todayDay + '/' + todayMonth);
-events = rows.filter(row => {
-    const isNotConfig = row.día !== "0";  // con tilde
-    const isToday = row.día === todayDay && row.mes === todayMonth;  // día con tilde
-console.log('Revisando fila:', JSON.stringify(row));
-console.log('Comparando:', row.día, '===', todayDay, '&&', row.mes, '===', todayMonth);
+                // console.log('=== BUSCANDO EVENTOS DE HOY ===');
+                // console.log('Hoy:', todayDay + '/' + todayMonth);
+                events = rows.filter(row => {
+                const isNotConfig = row.día !== "0";  // con tilde
+                const isToday = row.día === todayDay && row.mes === todayMonth;  // día con tilde
+                // console.log('Revisando fila:', JSON.stringify(row));
+                // console.log('Comparando:', row.día, '===', todayDay, '&&', row.mes, '===', todayMonth);
 
     return isNotConfig && isToday;
 });                
-                console.log('=== RESULTADOS DEL FILTRADO ===');
-                console.log('Configuración (día 0):', defaultConfig);
-                console.log('Eventos de hoy encontrados:', events);
-                console.log('Número de eventos:', events.length);
+                // console.log('=== RESULTADOS DEL FILTRADO ===');
+                // console.log('Configuración (día 0):', defaultConfig);
+                // console.log('Eventos de hoy encontrados:', events);
+                // console.log('Número de eventos:', events.length);
                 
                 // SI NO HAY EFEMÉRIDES HOY - crear evento especial
                 if (events.length === 0) {
-                    console.log('No hay eventos para hoy, creando evento especial...');
+                    // console.log('No hay eventos para hoy, creando evento especial...');
                     events = [{
                         prefix: "ERROR 404: DÍA NOT FOUND",
                         evento: "Hoy faltas TÚ.",
@@ -359,16 +359,16 @@ console.log('Comparando:', row.día, '===', todayDay, '&&', row.mes, '===', toda
                 
                 // INICIAR
                 if (events.length > 0) {
-                    console.log('Mostrando evento...');
+                    // console.log('Mostrando evento...');
                     displayEvent(events[currentIndex], currentIndex);
                     if (events.length > 1) {
-                        console.log('Iniciando rotación...');
+                        // console.log('Iniciando rotación...');
                         startRotation();
                     }
                 }
                 
             } catch (error) {
-                console.error('=== ERROR CRÍTICO ===', error);
+                // console.error('=== ERROR CRÍTICO ===', error);
                 // Fallback: crear evento de error
                 events = [{
                     prefix: "ERROR 404: DÍA NOT FOUND", 
@@ -383,12 +383,12 @@ console.log('Comparando:', row.día, '===', todayDay, '&&', row.mes, '===', toda
 
         function parseTSV(tsv) {
             const lines = tsv.split('\n').filter(line => line.trim());
-            console.log('Número de líneas:', lines.length);
+            // console.log('Número de líneas:', lines.length);
             
             if (lines.length === 0) return [];
             
             const headers = lines[0].split('\t').map(header => header.trim().toLowerCase());
-            console.log('Cabeceras encontradas:', headers);
+            // console.log('Cabeceras encontradas:', headers);
             
             const rows = [];
             for (let i = 1; i < lines.length; i++) {
@@ -406,7 +406,7 @@ console.log('Comparando:', row.día, '===', todayDay, '&&', row.mes, '===', toda
         }
 
 function displayEvent(event, index) {
-    console.log('=== MOSTRANDO EVENTO ===', event);
+    // console.log('=== MOSTRANDO EVENTO ===', event);
     
     // CALCULAR PREFIX DINÁMICAMENTE (como en code.gs)
     const currentYear = new Date().getFullYear();
@@ -430,26 +430,24 @@ function displayEvent(event, index) {
     // Si el evento tiene imagen, usar la local
     if (event.imagen && event.imagen.trim()) {
     imageSource = 'images/' + encodeURIComponent(event.imagen);
-    // imageSource = './images/' + encodeURIComponent(event.imagen);
-//imageSource = './images/' + event.imagen;
-        console.log('Usando imagen del evento:', imageSource);
+        // console.log('Usando imagen del evento:', imageSource);
     } 
     // Si no hay imagen, usar la configuración por defecto
     else if (defaultConfig?.imagen) {
         imageSource = './images/' + encodeURIComponent(defaultConfig.imagen);
         
         sourceAttribution = defaultConfig.licencia || '';
-        console.log('Usando imagen por defecto:', imageSource);
+        // console.log('Usando imagen por defecto:', imageSource);
     } else {
-        console.log('No se encontró ninguna imagen');
+        // console.log('No se encontró ninguna imagen');
     }
     
     if (!sourceAttribution && event.licencia) {
         sourceAttribution = event.licencia;
     }
 
-    console.log('Imagen final:', imageSource);
-    console.log('Licencia final:', sourceAttribution);
+    // console.log('Imagen final:', imageSource);
+    // console.log('Licencia final:', sourceAttribution);
 
     const indicatorsHtml = generateIndicators(index, 'horizontal');
     const indicatorsVerticalHtml = generateIndicators(index, 'vertical');
@@ -507,7 +505,7 @@ function displayEvent(event, index) {
             console.error('Error cargando imagen:', img.src);
             if (defaultConfig?.imagen) {
                 img.src = './images/' + encodeURIComponent(defaultConfig.imagen);
-                console.log('Imagen de fallback cargada:', img.src);
+                // console.log('Imagen de fallback cargada:', img.src);
             }
         }
 
@@ -548,7 +546,7 @@ function displayEvent(event, index) {
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('=== INICIANDO APLICACIÓN ===');
+            // console.log('=== INICIANDO APLICACIÓN ===');
             loadData();
         });
 
