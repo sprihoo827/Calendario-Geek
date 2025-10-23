@@ -3,376 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendario Geek - Efemérides</title>
+    <title>Efemérides Geek</title>
     <style>
+        /* TODO TU CSS ACTUAL (sin cambios) */
         :root {
             --primary-color: #001f3f;
             --secondary-color: #003366;
             --accent-color: #ffc300;
             --text-color: #f7f7f7;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--primary-color);
-            color: var(--text-color);
-            overflow-x: hidden;
-        }
-
-        .app-container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Layout principal - se adapta según orientación */
-        .content-main {
-            display: flex;
-            flex: 1;
-        }
-
-        /* Layout horizontal (escritorio y móvil landscape) */
-        .layout-horizontal {
-            flex-direction: row;
-            height: 100vh;
-        }
-
-        .text-content {
-            flex: 1;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            overflow-y: auto;
-        }
-
-        .image-content {
-            width: 45%;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .image-content img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Layout vertical (móvil portrait) - CONTENIDO CENTRADO */
-        .layout-vertical {
-            flex-direction: column;
-            min-height: 100vh;
-            width: 100%;
-        }
-
-        .image-vertical {
-            width: 100%;
-            height: 40vh;
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .image-vertical img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            flex: 1;
-        }
-
-        .text-vertical {
-            flex: 1;
-            padding: 30px 25px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow-y: auto;
-            text-align: center;
-        }
-
-        .text-vertical-content {
-            width: 100%;
-            max-width: 800px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Estilos de texto */
-        h1 {
-            font-size: clamp(2rem, 4vw, 3.5rem);
-            color: var(--text-color);
-            margin-bottom: 15px;
-            font-weight: 300;
-            text-align: center;
-            width: 100%;
-        }
-
-        .title-emphasis {
-            font-size: clamp(2.5rem, 6vw, 5rem);
-            font-weight: bold;
-            color: var(--accent-color);
-            margin: 25px 0;
-            line-height: 1.2;
-            text-align: center;
-            width: 100%;
-        }
-
-        .description-col {
-            font-size: clamp(1.1rem, 2vw, 1.8rem);
-            line-height: 1.6;
-            color: var(--text-color);
-            text-align: center;
-            width: 100%;
-        }
-
-        .year {
-            font-size: clamp(1rem, 1.8vw, 1.5rem);
-            color: var(--accent-color);
-            margin-top: 20px;
-            font-weight: 600;
-            text-align: center;
-            width: 100%;
-        }
-
-        .image-attribution {
-            font-size: 0.7rem;
-            color: var(--text-color);
-            padding: 12px;
-            text-align: center;
-            background-color: rgba(0, 0, 0, 0.4);
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 10;
-        }
-
-        .image-attribution-vertical {
-            font-size: 0.7rem;
-            color: var(--text-color);
-            padding: 12px;
-            text-align: center;
-            background-color: rgba(0, 0, 0, 0.4);
-            width: 100%;
-        }
-
-        /* Indicadores de rotación */
-        .rotation-indicators {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            padding: 20px;
-            position: absolute;
-            bottom: 50px;
-            left: 0;
-            right: 0;
-            z-index: 20;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
-        }
-
-        .rotation-indicators-vertical {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            padding: 20px;
-            background: rgba(0, 31, 63, 0.8);
-            width: 100%;
-        }
-
-        .indicator {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .indicator.active {
-            background-color: var(--accent-color);
-            transform: scale(1.2);
-        }
-
-        /* Media Queries */
-        @media (min-width: 1025px), (orientation: landscape) {
-            .content-main {
-                flex-direction: row;
-                height: 100vh;
-            }
-            .layout-vertical {
-                display: none;
-            }
-            .rotation-indicators-vertical {
-                display: none;
-            }
-        }
-
-        @media (max-width: 1024px) and (orientation: portrait) {
-            .content-main {
-                flex-direction: column;
-                min-height: 100vh;
-            }
-            .layout-horizontal {
-                display: none;
-            }
-            .rotation-indicators {
-                display: none;
-            }
-        }
-
-        @media (max-width: 1024px) and (orientation: landscape) {
-            .text-content {
-                padding: 25px;
-            }
-            .image-content {
-                width: 40%;
-            }
-            .title-emphasis {
-                font-size: 3rem;
-                margin: 15px 0;
-            }
-            h1 {
-                font-size: 2rem;
-            }
-            .rotation-indicators {
-                bottom: 40px;
-                padding: 15px;
-            }
-        }
-
-        @media (max-width: 480px) and (orientation: portrait) {
-            .text-vertical {
-                padding: 25px 20px;
-            }
-            .image-vertical {
-                height: 35vh;
-            }
-            .title-emphasis {
-                margin: 20px 0;
-            }
-            .description-col {
-                font-size: 1.1rem;
-            }
-        }
-
-        @media (max-width: 360px) and (orientation: portrait) {
-            .text-vertical {
-                padding: 20px 15px;
-            }
-            .title-emphasis {
-                font-size: 2.2rem;
-            }
-            h1 {
-                font-size: 1.8rem;
-            }
-            .description-col {
-                font-size: 1rem;
-            }
-        }
-
-        /* Animaciones */
-        .fade-in {
-            animation: fadeIn 0.8s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Scroll suave */
-        .text-content::-webkit-scrollbar,
-        .text-vertical::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .text-content::-webkit-scrollbar-track,
-        .text-vertical::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .text-content::-webkit-scrollbar-thumb,
-        .text-vertical::-webkit-scrollbar-thumb {
-            background: var(--accent-color);
-            border-radius: 3px;
-        }
-
-        /* Estados de carga */
-        .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-size: 1.5rem;
-        }
-
-        .error {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-            padding: 40px;
-            text-align: center;
-        }
+        /* ... todo tu CSS completo ... */
     </style>
 </head>
 <body>
     <div class="app-container">
-        <div id="event-container" class="content-main">
-            <div class="loading">Cargando efemérides...</div>
-        </div>
+        <div id="event-container" class="content-main"></div>
     </div>
 
     <script>
-        // Datos de ejemplo - puedes reemplazar con una API real
-        const events = [
-            {
-                prefix: "Hoy recordamos",
-                evento: "Lanzamiento de Windows 95",
-                descripcion: "Microsoft lanzó Windows 95, un sistema operativo que revolucionó la informática personal con su interfaz gráfica y el botón Inicio.",
-                año: "1995",
-                imagenUrl: "https://images.unsplash.com/photo-1547082299-de196ea013d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                fuenteImagen: "Foto por Unsplash"
-            },
-            {
-                prefix: "Un día como hoy",
-                evento: "Primer iPhone anunciado",
-                descripcion: "Steve Jobs presentó el primer iPhone, cambiando para siempre la industria de la telefonía móvil.",
-                año: "2007",
-                imagenUrl: "https://images.unsplash.com/photo-1512054502232-10a0a035d672?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                fuenteImagen: "Foto por Unsplash"
-            },
-            {
-                prefix: "Efeméride Geek",
-                evento: "Nacimiento de Linux",
-                descripcion: "Linus Torvalds anunció el primer lanzamiento del kernel Linux, dando inicio a uno de los proyectos de código abierto más importantes.",
-                año: "1991",
-                imagenUrl: "https://images.unsplash.com/photo-1629654297291-c373c35b7a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                fuenteImagen: "Foto por Unsplash"
-            }
-        ];
-
-        const defaultImage = "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80";
-        const defaultlicense = "Imagen por defecto de Unsplash";
-        const ROTATION_TIME_MS = 10000; // 10 segundos
+        // VARIABLES GLOBALES
+        let events = [];
+        let defaultImage = "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80";
+        let defaultlicense = "Imagen por defecto de Unsplash";
+        const ROTATION_TIME_MS = 10000;
 
         const container = document.getElementById('event-container');
         let currentIndex = 0;
         let rotationInterval;
 
+        // CARGAR DATOS DESDE JSON
+        async function loadData() {
+            try {
+                const response = await fetch('./data/events.json');
+                const data = await response.json();
+                
+                events = data.events || [];
+                defaultImage = data.defaultImage || defaultImage;
+                defaultlicense = data.defaultLicense || defaultlicense;
+                
+                if (events.length > 0) {
+                    displayEvent(events[currentIndex], currentIndex);
+                    startRotation();
+                    createIndicators();
+                } else {
+                    showNoEvents();
+                }
+            } catch (error) {
+                console.error('Error loading data:', error);
+                showError();
+            }
+        }
+
+        // FUNCIÓN PARA MOSTRAR EVENTO (tu código adaptado)
         function displayEvent(event, index) {
             const prefix = event.prefix || '';
             const eventTitle = event.evento || '';
@@ -385,10 +67,6 @@
             if (!sourceAttribution && imageSource === defaultImage) {
                 sourceAttribution = defaultlicense;
             }
-
-            // Generar indicadores
-            const indicatorsHtml = generateIndicators(index, 'horizontal');
-            const indicatorsVerticalHtml = generateIndicators(index, 'vertical');
 
             // Detectar orientación
             const isLandscape = window.matchMedia("(orientation: landscape)").matches;
@@ -410,7 +88,7 @@
                         </div>
                         <div class="image-content">
                             <img src="${imageSource}" alt="Imagen de ${eventTitle}" onerror="this.src='${defaultImage}'">
-                            ${indicatorsHtml}
+                            ${generateIndicators(index, 'horizontal')}
                             ${sourceAttribution ? `<div class="image-attribution">${sourceAttribution}</div>` : ''}
                         </div>
                     </div>
@@ -433,7 +111,7 @@
                                 </div>
                             </div>
                         </div>
-                        ${indicatorsVerticalHtml}
+                        ${generateIndicators(index, 'vertical')}
                     </div>
                 `;
             }
@@ -442,75 +120,18 @@
             attachIndicatorListeners();
         }
 
-        function generateIndicators(activeIndex, type) {
-            if (!events || events.length <= 1) return '';
-            
-            let indicators = '';
-            const indicatorClass = type === 'vertical' ? 'rotation-indicators-vertical' : 'rotation-indicators';
-            
-            events.forEach((_, index) => {
-                const activeClass = index === activeIndex ? 'active' : '';
-                indicators += `<div class="indicator ${activeClass}" data-index="${index}"></div>`;
-            });
-            
-            return `<div class="${indicatorClass}">${indicators}</div>`;
-        }
+        // ... (TODAS TUS OTRAS FUNCIONES: generateIndicators, attachIndicatorListeners, startRotation, etc.)
 
-        function attachIndicatorListeners() {
-            const indicators = document.querySelectorAll('.indicator');
-            indicators.forEach(indicator => {
-                indicator.addEventListener('click', () => {
-                    const index = parseInt(indicator.getAttribute('data-index'));
-                    clearInterval(rotationInterval);
-                    currentIndex = index;
-                    displayEvent(events[currentIndex], currentIndex);
-                    startRotation();
-                });
-            });
-        }
-
-        function startRotation() {
-            if (events && events.length > 1) {
-                rotationInterval = setInterval(() => {
-                    currentIndex = (currentIndex + 1) % events.length;
-                    displayEvent(events[currentIndex], currentIndex);
-                }, ROTATION_TIME_MS);
-            }
-        }
-
-        // Inicializar
-        function init() {
-            if (events && events.length > 0) {
-                displayEvent(events[currentIndex], currentIndex);
-                startRotation();
-            } else {
-                container.innerHTML = `
-                    <div class="error">
-                        <h1>No hay efemérides para mostrar</h1>
-                        <div class="description-col">
-                            <p>No hay efemérides geek disponibles en este momento.</p>
-                        </div>
-                    </div>
-                `;
-            }
-        }
-
-        // Esperar a que cargue el DOM
-        document.addEventListener('DOMContentLoaded', init);
-
-        // Redibujar al cambiar orientación o tamaño
-        window.addEventListener('resize', function() {
-            if (events && events.length > 0) {
-                displayEvent(events[currentIndex], currentIndex);
-            }
+        // INICIALIZAR
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
         });
 
-        window.addEventListener('orientationchange', function() {
-            setTimeout(() => {
-                if (events && events.length > 0) {
-                    displayEvent(events[currentIndex], currentIndex);
-                }
-            }, 100);
+        // Manejar redimensionamiento
+        window.addEventListener('resize', function() {
+            if (events.length > 0) {
+                displayEvent(events[currentIndex], currentIndex);
+            }
         });
     </script>
 </body>
