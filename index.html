@@ -380,10 +380,20 @@
             return rows;
         }
 
-        function displayEvent(event, index) {
-            console.log('=== MOSTRANDO EVENTO ===', event);
-            
-            const prefix = event.prefix || '';
+function displayEvent(event, index) {
+    console.log('=== MOSTRANDO EVENTO ===', event);
+    
+    // CALCULAR PREFIX DINÁMICAMENTE (como en code.gs)
+    const currentYear = new Date().getFullYear();
+    const eventYear = event.año ? parseInt(event.año) : null;
+    let prefix = "";
+    
+    if (eventYear && !isNaN(eventYear)) {
+        const yearsAgo = currentYear - eventYear;
+        prefix = `Un día como hoy, hace ${yearsAgo} años...`;
+    } else {
+        prefix = "Hoy es el día de...";
+    }
             const eventTitle = event.evento || '';
             const description = event.descripción || '';
             const year = event.año || '';
