@@ -403,14 +403,25 @@
                 
                 // console.log('=== BUSCANDO EVENTOS DE HOY ===');
                 // console.log('Hoy:', todayDay + '/' + todayMonth);
-                events = rows.filter(row => {
-                const isNotConfig = row.día !== "0";  // con tilde
-                const isToday = row.día === todayDay && row.mes === todayMonth;  // día con tilde
-                // console.log('Revisando fila:', JSON.stringify(row));
-                // console.log('Comparando:', row.día, '===', todayDay, '&&', row.mes, '===', todayMonth);
 
-    return isNotConfig && isToday;
-});                
+              events = rows.filter(row => {
+                    const isNotConfig = row.día !== "0";
+                    
+                    // Si día es 99, mostrar TODOS los eventos (excepto configuración)
+                    if (todayDay === "99") {
+                        return isNotConfig;
+                    }
+                    
+                    // Si no, filtrar por fecha normal
+                    const isToday = row.día === todayDay && row.mes === todayMonth;
+                    return isNotConfig && isToday;
+                });
+
+
+
+
+
+                
                 // console.log('=== RESULTADOS DEL FILTRADO ===');
                 // console.log('Configuración (día 0):', defaultConfig);
                 // console.log('Eventos de hoy encontrados:', events);
