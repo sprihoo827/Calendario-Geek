@@ -570,7 +570,7 @@ document.addEventListener('click', function(e) {
         e.target.classList.contains('app-container') ||
         e.target.classList.contains('content-main')) {
         
-        hue = (hue + 20) % 360; // Avanza 20° en el círculo cromático
+        hue = (hue + 10) % 360; // Avanza 20° en el círculo cromático
         const newColor = `hsl(${hue}, 70%, 15%)`;
         
         document.documentElement.style.setProperty('--primary-color', newColor);
