@@ -5,14 +5,242 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Efemérides Geek</title>
     <style>
-        /* TODO TU CSS COMPLETO (sin cambios) */
         :root {
             --primary-color: #001f3f;
             --secondary-color: #003366;
             --accent-color: #ffc300;
             --text-color: #f7f7f7;
         }
-        /* ... [TODO TU CSS ORIGINAL] ... */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Layout principal - se adapta según orientación */
+        .content-main {
+            display: flex;
+            flex: 1;
+        }
+
+        /* Layout horizontal (escritorio y móvil landscape) */
+        .layout-horizontal {
+            flex-direction: row;
+            height: 100vh;
+        }
+
+        .text-content {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow-y: auto;
+        }
+
+        .image-content {
+            width: 45%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .image-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Layout vertical (móvil portrait) - CONTENIDO CENTRADO */
+        .layout-vertical {
+            flex-direction: column;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .image-vertical {
+            width: 100%;
+            height: 40vh;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .image-vertical img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            flex: 1;
+        }
+
+        .text-vertical {
+            flex: 1;
+            padding: 30px 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+            text-align: center;
+        }
+
+        .text-vertical-content {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Estilos de texto */
+        h1 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            color: var(--text-color);
+            margin-bottom: 15px;
+            font-weight: 300;
+            text-align: center;
+            width: 100%;
+        }
+
+        .title-emphasis {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: bold;
+            color: var(--accent-color);
+            margin: 25px 0;
+            line-height: 1.2;
+            text-align: center;
+            width: 100%;
+        }
+
+        .description-col {
+            font-size: clamp(1.1rem, 2vw, 1.8rem);
+            line-height: 1.6;
+            color: var(--text-color);
+            text-align: center;
+            width: 100%;
+        }
+
+        .year {
+            font-size: clamp(1rem, 1.8vw, 1.5rem);
+            color: var(--accent-color);
+            margin-top: 20px;
+            font-weight: 600;
+            text-align: center;
+            width: 100%;
+        }
+
+        .image-attribution {
+            font-size: 0.7rem;
+            color: var(--text-color);
+            padding: 12px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.4);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+        }
+
+        .image-attribution-vertical {
+            font-size: 0.7rem;
+            color: var(--text-color);
+            padding: 12px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.4);
+            width: 100%;
+        }
+
+        /* Indicadores de rotación */
+        .rotation-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px;
+            position: absolute;
+            bottom: 50px;
+            left: 0;
+            right: 0;
+            z-index: 20;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
+        }
+
+        .rotation-indicators-vertical {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px;
+            background: rgba(0, 31, 63, 0.8);
+            width: 100%;
+        }
+
+        .indicator {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .indicator.active {
+            background-color: var(--accent-color);
+            transform: scale(1.2);
+        }
+
+        /* Media Queries */
+        @media (min-width: 1025px), (orientation: landscape) {
+            .content-main {
+                flex-direction: row;
+                height: 100vh;
+            }
+            .layout-vertical {
+                display: none;
+            }
+            .rotation-indicators-vertical {
+                display: none;
+            }
+        }
+
+        @media (max-width: 1024px) and (orientation: portrait) {
+            .content-main {
+                flex-direction: column;
+                min-height: 100vh;
+            }
+            .layout-horizontal {
+                display: none;
+            }
+            .rotation-indicators {
+                display: none;
+            }
+        }
+
+        /* Animaciones */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -102,7 +330,7 @@
             const year = event.año || '';
             let sourceAttribution = event.fuenteImagen || '';
             
-            // Manejo de imágenes
+            // Manejo de imágenes - USANDO NOMBRES CON ESPACIOS
             let imageSource = '';
             let hasValidImage = false;
             
@@ -110,13 +338,28 @@
                 imageSource = event.imagenBase64.trim();
                 hasValidImage = true;
             } else if (event.imagenUrl && event.imagenUrl.trim()) {
-                imageSource = event.imagenUrl.trim();
+                // Si es un nombre de archivo local (sin http), construir ruta
+                if (event.imagenUrl.includes('http')) {
+                    imageSource = event.imagenUrl.trim();
+                } else {
+                    // Codificar espacios para URLs: "Lanzamiento de Windows 95" -> "./images/Lanzamiento%20de%20Windows%2095"
+                    const encodedName = encodeURIComponent(event.imagenUrl.trim());
+                    imageSource = './images/' + encodedName;
+                }
                 hasValidImage = true;
             }
             
             // Si no hay imagen válida, usar la configuración por defecto
             if (!hasValidImage) {
-                imageSource = defaultImage;
+                if (defaultImage && defaultImage.includes('http')) {
+                    imageSource = defaultImage;
+                } else if (defaultImage) {
+                    const encodedDefault = encodeURIComponent(defaultImage.trim());
+                    imageSource = './images/' + encodedDefault;
+                } else {
+                    // Fallback hardcodeado
+                    imageSource = './images/default';
+                }
                 sourceAttribution = defaultLicense;
             }
             
@@ -178,11 +421,17 @@
 
         // MANEJAR ERRORES DE IMAGEN
         function handleImageError(img) {
+            // Intentar con imagen por defecto
             if (defaultImage) {
-                img.src = defaultImage;
+                if (defaultImage.includes('http')) {
+                    img.src = defaultImage;
+                } else {
+                    const encodedDefault = encodeURIComponent(defaultImage.trim());
+                    img.src = './images/' + encodedDefault;
+                }
             } else {
-                // Fallback hardcodeado si no hay defaultImage
-                img.src = "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80";
+                // Último fallback
+                img.src = './images/default';
             }
         }
 
