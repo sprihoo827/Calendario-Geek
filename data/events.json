@@ -1,0 +1,22 @@
+{
+  "events": [
+    {
+      "prefix": "Hoy recordamos",
+      "evento": "Lanzamiento de Windows 95",
+      "descripcion": "Microsoft lanzó Windows 95, un sistema operativo que revolucionó la informática personal con su interfaz gráfica y el botón Inicio.",
+      "año": "1995",
+      "imagenUrl": "https://images.unsplash.com/photo-1547082299-de196ea013d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+      "fuenteImagen": "Foto por Unsplash"
+    },
+    {
+      "prefix": "Un día como hoy", 
+      "evento": "Primer iPhone anunciado",
+      "descripcion": "Steve Jobs presentó el primer iPhone, cambiando para siempre la industria de la telefonía móvil.",
+      "año": "2007",
+      "imagenUrl": "https://images.unsplash.com/photo-1512054502232-10a0a035d672?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+      "fuenteImagen": "Foto por Unsplash"
+    }
+  ],
+  "defaultImage": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+  "defaultLicense": "Imagen por defecto de Unsplash"
+}
