@@ -58,16 +58,16 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    align-items: center; /* Centra la imagen */
-    justify-content: center; /* Centra verticalmente */
 }
 
 .image-content img {
-    width: 90%; /* Un poco menos del 100% */
-    height: auto;
-    max-height: 80vh;
-    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-height: 70vh; /* ← Esta línea nueva */
 }
+
+
 
         /* Layout vertical (móvil portrait) - CONTENIDO CENTRADO */
         .layout-vertical {
@@ -84,13 +84,13 @@
             flex-direction: column;
         }
 
-        .image-vertical img {
-            width: 100%;
-            height: 100%;
-            max-height: 50vh; /* Más pequeño en móvil */
-            object-fit: contain;
-            flex: 1;
-        }
+.image-vertical img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex: 1;
+    max-height: 40vh; /* ← Esta línea nueva */
+}
  
 
         .text-vertical {
