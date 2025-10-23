@@ -562,37 +562,17 @@ function displayEvent(event, index) {
         });
 
 
-
-        // SISTEMA DE COLORES PERSONALIZABLES
-let hue = 210; // Azul inicial
-
-function changeBackgroundColor() {
-    hue = (hue + 30) % 360;
+// PRUEBA DIRECTA - elimina todo lo anterior y pon solo esto:
+document.addEventListener('click', function(e) {
+    console.log('Click en:', e.target);
+    console.log('Clases:', e.target.className);
+    
+    // Cambiar color inmediatamente
+    const hue = Math.floor(Math.random() * 360);
     const newColor = `hsl(${hue}, 70%, 15%)`;
     document.documentElement.style.setProperty('--primary-color', newColor);
-    localStorage.setItem('bgColor', newColor);
-    console.log('Color cambiado a:', newColor); // Para debug
-}
-
-// Cargar color guardado
-const savedBgColor = localStorage.getItem('bgColor');
-if (savedBgColor) {
-    document.documentElement.style.setProperty('--primary-color', savedBgColor);
-    hue = parseInt(savedBgColor.match(/hsl\((\d+)/)[1]);
-}
-
-// Event listener MÁS SIMPLE - en el body
-document.addEventListener('click', function(e) {
-    // Solo cambiar si se hace click en áreas vacías (no en texto, imágenes, etc.)
-    if (e.target.tagName === 'BODY' || 
-        e.target.classList.contains('app-container') ||
-        e.target.classList.contains('content-main')) {
-        changeBackgroundColor();
-    }
+    console.log('Color cambiado a:', newColor);
 });
-
-// Cambiar cursor para indicar áreas clickeables
-document.body.style.cursor = 'pointer';
 
         
     </script>
