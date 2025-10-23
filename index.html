@@ -278,7 +278,15 @@
 
     <script>
         const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSTU-AKZ_aGs10aT7lT59Hm7H2MUe82TeQxeIjcsJ8XSm6-hrFjQEKyPezeq9lBouSgBPqT_gL3cH-Z/pub?gid=0&single=true&output=tsv";
-        
+        // Obtener parámetros de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlDay = urlParams.get('day');
+        const urlMonth = urlParams.get('month');
+
+        // FILTRAR POR FECHA ACTUAL O PARÁMETROS
+        const today = new Date();
+        const todayDay = urlDay ? urlDay.toString() : today.getDate().toString();
+        const todayMonth = urlMonth ? urlMonth.toString() : (today.getMonth() + 1).toString();
         let events = [];
         let defaultConfig = null;
         const ROTATION_TIME_MS = 10000;
