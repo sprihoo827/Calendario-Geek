@@ -394,86 +394,86 @@ function displayEvent(event, index) {
     } else {
         prefix = "Hoy es el día de...";
     }
-            const eventTitle = event.evento || '';
-            const description = event.descripción || '';
-            const year = event.año || '';
-            let sourceAttribution = event.licencia || '';
-            
-            // MANEJO DE IMÁGENES LOCALES desde carpeta images/
-            let imageSource = '';
-            
-            // Si el evento tiene imagen, usar la local
-            if (event.imagen && event.imagen.trim()) {
-                imageSource = './images/' + encodeURIComponent(event.imagen);
-                console.log('Usando imagen del evento:', imageSource);
-            } 
-            // Si no hay imagen, usar la configuración por defecto
-            else if (defaultConfig?.imagen) {
-                imageSource = './images/' + encodeURIComponent(defaultConfig.imagen);
-                sourceAttribution = defaultConfig.licencia || '';
-                console.log('Usando imagen por defecto:', imageSource);
-            } else {
-                console.log('No se encontró ninguna imagen');
-            }
-            
-            if (!sourceAttribution && event.licencia) {
-                sourceAttribution = event.licencia;
-            }
+    
+    const eventTitle = event.evento || '';
+    const description = event.descripción || '';
+    let sourceAttribution = event.licencia || '';
+    
+    // MANEJO DE IMÁGENES LOCALES desde carpeta images/
+    let imageSource = '';
+    
+    // Si el evento tiene imagen, usar la local
+    if (event.imagen && event.imagen.trim()) {
+        imageSource = './images/' + encodeURIComponent(event.imagen);
+        console.log('Usando imagen del evento:', imageSource);
+    } 
+    // Si no hay imagen, usar la configuración por defecto
+    else if (defaultConfig?.imagen) {
+        imageSource = './images/' + encodeURIComponent(defaultConfig.imagen);
+        sourceAttribution = defaultConfig.licencia || '';
+        console.log('Usando imagen por defecto:', imageSource);
+    } else {
+        console.log('No se encontró ninguna imagen');
+    }
+    
+    if (!sourceAttribution && event.licencia) {
+        sourceAttribution = event.licencia;
+    }
 
-            console.log('Imagen final:', imageSource);
-            console.log('Licencia final:', sourceAttribution);
+    console.log('Imagen final:', imageSource);
+    console.log('Licencia final:', sourceAttribution);
 
-            const indicatorsHtml = generateIndicators(index, 'horizontal');
-            const indicatorsVerticalHtml = generateIndicators(index, 'vertical');
+    const indicatorsHtml = generateIndicators(index, 'horizontal');
+    const indicatorsVerticalHtml = generateIndicators(index, 'vertical');
 
-            const isLandscape = window.matchMedia("(orientation: landscape)").matches;
-            const isDesktop = window.innerWidth >= 1025;
+    const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+    const isDesktop = window.innerWidth >= 1025;
 
-            let html = '';
+    let html = '';
 
-            if (isLandscape || isDesktop) {
-                html = `
-                    <div class="layout-horizontal content-main fade-in">
-                        <div class="text-content">
-                            <h1>${prefix}</h1>
-                            <div class="title-emphasis">${eventTitle}</div>
-                            <div class="description-col">
-                                ${description ? `<p>${description}</p>` : ''}
-                                ${year ? `<p class="year">Año: ${year}</p>` : ''}
-                            </div>
-                        </div>
-                        <div class="image-content">
-                            <img src="${imageSource}" alt="Imagen de ${eventTitle}" onerror="handleImageError(this)">
-                            ${indicatorsHtml}
-                            ${sourceAttribution ? `<div class="image-attribution">${sourceAttribution}</div>` : ''}
+    if (isLandscape || isDesktop) {
+        html = `
+            <div class="layout-horizontal content-main fade-in">
+                <div class="text-content">
+                    <h1>${prefix}</h1>
+                    <div class="title-emphasis">${eventTitle}</div>
+                    <div class="description-col">
+                        ${description ? `<p>${description}</p>` : ''}
+                        ${eventYear ? `<p class="year">Año: ${eventYear}</p>` : ''}
+                    </div>
+                </div>
+                <div class="image-content">
+                    <img src="${imageSource}" alt="Imagen de ${eventTitle}" onerror="handleImageError(this)">
+                    ${indicatorsHtml}
+                    ${sourceAttribution ? `<div class="image-attribution">${sourceAttribution}</div>` : ''}
+                </div>
+            </div>
+        `;
+    } else {
+        html = `
+            <div class="layout-vertical content-main fade-in">
+                <div class="image-vertical">
+                    <img src="${imageSource}" alt="Imagen de ${eventTitle}" onerror="handleImageError(this)">
+                    ${sourceAttribution ? `<div class="image-attribution-vertical">${sourceAttribution}</div>` : ''}
+                </div>
+                <div class="text-vertical">
+                    <div class="text-vertical-content">
+                        <h1>${prefix}</h1>
+                        <div class="title-emphasis">${eventTitle}</div>
+                        <div class="description-col">
+                            ${description ? `<p>${description}</p>` : ''}
+                            ${eventYear ? `<p class="year">Año: ${eventYear}</p>` : ''}
                         </div>
                     </div>
-                `;
-            } else {
-                html = `
-                    <div class="layout-vertical content-main fade-in">
-                        <div class="image-vertical">
-                            <img src="${imageSource}" alt="Imagen de ${eventTitle}" onerror="handleImageError(this)">
-                            ${sourceAttribution ? `<div class="image-attribution-vertical">${sourceAttribution}</div>` : ''}
-                        </div>
-                        <div class="text-vertical">
-                            <div class="text-vertical-content">
-                                <h1>${prefix}</h1>
-                                <div class="title-emphasis">${eventTitle}</div>
-                                <div class="description-col">
-                                    ${description ? `<p>${description}</p>` : ''}
-                                    ${year ? `<p class="year">Año: ${year}</p>` : ''}
-                                </div>
-                            </div>
-                        </div>
-                        ${indicatorsVerticalHtml}
-                    </div>
-                `;
-            }
-            
-            container.innerHTML = html;
-            attachIndicatorListeners();
-        }
+                </div>
+                ${indicatorsVerticalHtml}
+            </div>
+        `;
+    }
+    
+    container.innerHTML = html;
+    attachIndicatorListeners();
+}
 
         function handleImageError(img) {
             console.error('Error cargando imagen:', img.src);
