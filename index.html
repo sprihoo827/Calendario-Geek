@@ -53,22 +53,18 @@
             overflow-y: auto;
         }
 
-.image-content {
-    width: 45%;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-
 .image-content img {
-    width: auto; /* Ancho automático */
-    height: 100%; /* Ocupa toda la altura */
-    max-height: 70vh;
-    max-width: 100%; /* No más ancho que el contenedor */
-    object-fit: contain;
-    margin: 0 auto; /* Centra horizontalmente */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
+.image-vertical img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex: 1;
+}
 
         /* Layout vertical (móvil portrait) - CONTENIDO CENTRADO */
         .layout-vertical {
