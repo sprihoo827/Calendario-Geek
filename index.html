@@ -312,10 +312,12 @@ defaultConfig = rows.find(row => row.día === "0" && row.mes === "0");  // día 
                 
 console.log('=== BUSCANDO EVENTOS DE HOY ===');
 console.log('Hoy:', todayDay + '/' + todayMonth);
-
 events = rows.filter(row => {
     const isNotConfig = row.día !== "0";  // con tilde
     const isToday = row.día === todayDay && row.mes === todayMonth;  // día con tilde
+console.log('Revisando fila:', JSON.stringify(row));
+console.log('Comparando:', row.día, '===', todayDay, '&&', row.mes, '===', todayMonth);
+
     return isNotConfig && isToday;
 });                
                 console.log('=== RESULTADOS DEL FILTRADO ===');
