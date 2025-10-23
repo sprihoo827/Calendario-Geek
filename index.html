@@ -562,18 +562,32 @@ function displayEvent(event, index) {
         });
 
 
-        // PRUEBA DIRECTA - elimina todo lo anterior y pon solo esto:
-        document.addEventListener('click', function(e) {
-        console.log('Click en:', e.target);
-        console.log('Clases:', e.target.className);
-        
-        // Cambiar color inmediatamente
-        const hue = Math.floor(Math.random() * 360);
-        const newColor = `hsl(${hue}, 70%, 15%)`;
-        document.documentElement.style.setProperty('--primary-color', newColor);
-        console.log('Color cambiado a:', newColor);
-        });
+let hue = 210; // Empezamos con el azul original
 
+document.addEventListener('click', function(e) {
+    // Solo cambiar en clicks en el fondo
+    if (e.target.tagName === 'BODY' || 
+        e.target.classList.contains('app-container') ||
+        e.target.classList.contains('content-main')) {
+        
+        hue = (hue + 20) % 360; // Avanza 20° en el círculo cromático
+        const newColor = `hsl(${hue}, 70%, 15%)`;
+        
+        document.documentElement.style.setProperty('--primary-color', newColor);
+        localStorage.setItem('bgColor', newColor);
+        
+        console.log('Color cambiado a:', newColor, 'Hue:', hue);
+    }
+});
+
+// Cargar color guardado al iniciar
+const savedBgColor = localStorage.getItem('bgColor');
+if (savedBgColor) {
+    document.documentElement.style.setProperty('--primary-color', savedBgColor);
+    // Extraer el hue para continuar desde ahí
+    const match = savedBgColor.match(/hsl\((\d+)/);
+    if (match) hue = parseInt(match[1]);
+}
         
     </script>
 </body>
