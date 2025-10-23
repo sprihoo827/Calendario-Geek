@@ -482,14 +482,14 @@ function displayEvent(event, index) {
     // CALCULAR PREFIX DINÁMICAMENTE (como en code.gs)
     const currentYear = new Date().getFullYear();
     const eventYear = event.año ? parseInt(event.año) : null;
-    let prefix = "";
-    
-    if (eventYear && !isNaN(eventYear)) {
-        const yearsAgo = currentYear - eventYear;
-        prefix = `Un día como hoy, hace ${yearsAgo} años...`;
-    } else {
-        prefix = "Hoy es el día de...";
-    }
+  let prefix = event.prefix || "";
+
+if (!prefix && eventYear && !isNaN(eventYear)) {
+    const yearsAgo = currentYear - eventYear;
+    prefix = `Un día como hoy, hace ${yearsAgo} años...`;
+} else if (!prefix) {
+    prefix = "Hoy es el día de...";
+}
     
     const eventTitle = event.evento || '';
     const description = event.descripción || '';
