@@ -562,17 +562,17 @@ function displayEvent(event, index) {
         });
 
 
-// PRUEBA DIRECTA - elimina todo lo anterior y pon solo esto:
-document.addEventListener('click', function(e) {
-    console.log('Click en:', e.target);
-    console.log('Clases:', e.target.className);
-    
-    // Cambiar color inmediatamente
-    const hue = Math.floor(Math.random() * 360);
-    const newColor = `hsl(${hue}, 70%, 15%)`;
-    document.documentElement.style.setProperty('--primary-color', newColor);
-    console.log('Color cambiado a:', newColor);
-});
+        // PRUEBA DIRECTA - elimina todo lo anterior y pon solo esto:
+        document.addEventListener('click', function(e) {
+        console.log('Click en:', e.target);
+        console.log('Clases:', e.target.className);
+        
+        // Cambiar color inmediatamente
+        const hue = Math.floor(Math.random() * 360);
+        const newColor = `hsl(${hue}, 70%, 15%)`;
+        document.documentElement.style.setProperty('--primary-color', newColor);
+        console.log('Color cambiado a:', newColor);
+        });
 
         
     </script>
