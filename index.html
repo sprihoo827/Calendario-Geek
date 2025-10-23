@@ -409,13 +409,14 @@ function displayEvent(event, index) {
     
     // Si el evento tiene imagen, usar la local
     if (event.imagen && event.imagen.trim()) {
-        imageSource = './images/' + encodeURIComponent(event.imagen);
+       // imageSource = './images/' + encodeURIComponent(event.imagen);
+        imageSource = './images/' + encodeURI(event.imagen);
         console.log('Usando imagen del evento:', imageSource);
     } 
     // Si no hay imagen, usar la configuración por defecto
     else if (defaultConfig?.imagen) {
-//        imageSource = './images/' + encodeURIComponent(defaultConfig.imagen);
-        imageSource = './images/' + encodeURI(event.imagen);
+        imageSource = './images/' + encodeURIComponent(defaultConfig.imagen);
+        
         sourceAttribution = defaultConfig.licencia || '';
         console.log('Usando imagen por defecto:', imageSource);
     } else {
