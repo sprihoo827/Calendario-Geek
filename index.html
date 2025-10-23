@@ -556,6 +556,48 @@ function displayEvent(event, index) {
                 }
             }, 100);
         });
+
+        // SISTEMA DE COLORES PERSONALIZABLES
+let hue = 210; // Azul inicial (de tu --primary-color)
+
+// Función para cambiar color de fondo
+function changeBackgroundColor() {
+    hue = (hue + 30) % 360; // Avanza 30° en el espectro
+    const newColor = `hsl(${hue}, 70%, 15%)`; // Mismo saturation/lightness que tu azul
+    
+    // Aplicar el color
+    document.documentElement.style.setProperty('--primary-color', newColor);
+    
+    // Guardar en localStorage
+    localStorage.setItem('bgColor', newColor);
+}
+
+// Cargar color guardado al iniciar
+const savedBgColor = localStorage.getItem('bgColor');
+if (savedBgColor) {
+    document.documentElement.style.setProperty('--primary-color', savedBgColor);
+    // Extraer el hue del color guardado para continuar desde ahí
+    hue = parseInt(savedBgColor.match(/hsl\((\d+)/)[1]);
+}
+
+// Event listener para el fondo - click en cualquier parte del contenedor principal
+document.addEventListener('DOMContentLoaded', function() {
+    // Esperar a que se cargue el contenido y luego añadir el event listener
+    setTimeout(() => {
+        const appContainer = document.querySelector('.app-container');
+        if (appContainer) {
+            appContainer.style.cursor = 'pointer'; // Cambiar cursor para indicar que es clickeable
+            appContainer.addEventListener('click', function(e) {
+                // Solo cambiar color si se hace click en el fondo (no en otros elementos)
+                if (e.target === this || e.target.classList.contains('content-main')) {
+                    changeBackgroundColor();
+                }
+            });
+        }
+    }, 1000);
+});
+
+        
     </script>
 </body>
 </html>
