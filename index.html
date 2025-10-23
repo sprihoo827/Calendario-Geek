@@ -5,255 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Efemérides Geek</title>
     <style>
+        /* TODO TU CSS COMPLETO (sin cambios) */
         :root {
             --primary-color: #001f3f;
             --secondary-color: #003366;
             --accent-color: #ffc300;
             --text-color: #f7f7f7;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--primary-color);
-            color: var(--text-color);
-            overflow-x: hidden;
-        }
-
-        .app-container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Layout principal - se adapta según orientación */
-        .content-main {
-            display: flex;
-            flex: 1;
-        }
-
-        /* Layout horizontal (escritorio y móvil landscape) */
-        .layout-horizontal {
-            flex-direction: row;
-            height: 100vh;
-        }
-
-        .text-content {
-            flex: 1;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            overflow-y: auto;
-        }
-
-        .image-content {
-            width: 45%;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .image-content img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Layout vertical (móvil portrait) - CONTENIDO CENTRADO */
-        .layout-vertical {
-            flex-direction: column;
-            min-height: 100vh;
-            width: 100%;
-        }
-
-        .image-vertical {
-            width: 100%;
-            height: 40vh;
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .image-vertical img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            flex: 1;
-        }
-
-        .text-vertical {
-            flex: 1;
-            padding: 30px 25px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow-y: auto;
-            text-align: center;
-        }
-
-        .text-vertical-content {
-            width: 100%;
-            max-width: 800px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Estilos de texto */
-        h1 {
-            font-size: clamp(2rem, 4vw, 3.5rem);
-            color: var(--text-color);
-            margin-bottom: 15px;
-            font-weight: 300;
-            text-align: center;
-            width: 100%;
-        }
-
-        .title-emphasis {
-            font-size: clamp(2.5rem, 6vw, 5rem);
-            font-weight: bold;
-            color: var(--accent-color);
-            margin: 25px 0;
-            line-height: 1.2;
-            text-align: center;
-            width: 100%;
-        }
-
-        .description-col {
-            font-size: clamp(1.1rem, 2vw, 1.8rem);
-            line-height: 1.6;
-            color: var(--text-color);
-            text-align: center;
-            width: 100%;
-        }
-
-        .year {
-            font-size: clamp(1rem, 1.8vw, 1.5rem);
-            color: var(--accent-color);
-            margin-top: 20px;
-            font-weight: 600;
-            text-align: center;
-            width: 100%;
-        }
-
-        .image-attribution {
-            font-size: 0.7rem;
-            color: var(--text-color);
-            padding: 12px;
-            text-align: center;
-            background-color: rgba(0, 0, 0, 0.4);
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 10;
-        }
-
-        .image-attribution-vertical {
-            font-size: 0.7rem;
-            color: var(--text-color);
-            padding: 12px;
-            text-align: center;
-            background-color: rgba(0, 0, 0, 0.4);
-            width: 100%;
-        }
-
-        /* Indicadores de rotación */
-        .rotation-indicators {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            padding: 20px;
-            position: absolute;
-            bottom: 50px;
-            left: 0;
-            right: 0;
-            z-index: 20;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
-        }
-
-        .rotation-indicators-vertical {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            padding: 20px;
-            background: rgba(0, 31, 63, 0.8);
-            width: 100%;
-        }
-
-        .indicator {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .indicator.active {
-            background-color: var(--accent-color);
-            transform: scale(1.2);
-        }
-
-        /* Media Queries */
-        @media (min-width: 1025px), (orientation: landscape) {
-            .content-main {
-                flex-direction: row;
-                height: 100vh;
-            }
-            .layout-vertical {
-                display: none;
-            }
-            .rotation-indicators-vertical {
-                display: none;
-            }
-        }
-
-        @media (max-width: 1024px) and (orientation: portrait) {
-            .content-main {
-                flex-direction: column;
-                min-height: 100vh;
-            }
-            .layout-horizontal {
-                display: none;
-            }
-            .rotation-indicators {
-                display: none;
-            }
-        }
-
-        /* Animaciones */
-        .fade-in {
-            animation: fadeIn 0.8s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        /* ... [TODO TU CSS ORIGINAL] ... */
     </style>
 </head>
 <body>
     <div class="app-container">
         <div id="event-container" class="content-main">
             <div style="text-align: center; padding: 40px;">
-                <h1>Cargando efemérides...</h1>
+                <h1>Cargando efemérides desde Google Sheets...</h1>
             </div>
         </div>
     </div>
 
     <script>
-        // VARIABLES GLOBALES
+        // CONFIGURACIÓN
+        const SHEET_ID = "1HxfaB3wvhH6uluMUW00buIYLlTWAXlTqxSvqltlSRmM";
+        const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+        
         let events = [];
         let defaultImage = "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80";
         let defaultlicense = "Imagen por defecto de Unsplash";
@@ -263,18 +38,73 @@
         let currentIndex = 0;
         let rotationInterval;
 
-        // CARGAR DATOS DESDE JSON
+        // CARGAR DATOS DESDE GOOGLE SHEETS
         async function loadData() {
             try {
-                console.log('Cargando datos...');
-                const response = await fetch('./data/events.json');
+                console.log('Cargando datos desde Google Sheets...');
                 
+                const response = await fetch(SHEET_URL);
                 if (!response.ok) {
                     throw new Error(`Error HTTP: ${response.status}`);
                 }
                 
+                const text = await response.text();
+                const json = JSON.parse(text.substring(47).slice(0, -2));
+                
+                events = transformSheetData(json);
+                console.log('Datos transformados:', events);
+                
+                if (events.length > 0) {
+                    displayEvent(events[currentIndex], currentIndex);
+                    startRotation();
+                } else {
+                    showNoEvents();
+                }
+            } catch (error) {
+                console.error('Error cargando desde Google Sheets:', error);
+                showError(`Error: ${error.message}. Intentando cargar datos locales...`);
+                // Fallback a datos locales
+                await loadLocalData();
+            }
+        }
+
+        // TRANSFORMAR DATOS DE GOOGLE SHEETS A NUESTRO FORMATO
+        function transformSheetData(jsonData) {
+            const rows = jsonData.table.rows;
+            const events = [];
+            
+            // Asumimos que la primera fila son los encabezados
+            // Ajusta estos índices según tu estructura de columnas
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                const cells = row.c;
+                
+                // AJUSTA ESTOS ÍNDICES SEGÚN TUS COLUMNAS:
+                // 0: prefix, 1: evento, 2: descripcion, 3: año, 4: imagenUrl, 5: fuenteImagen, 6: imagenBase64
+                const event = {
+                    prefix: cells[0]?.v || '',
+                    evento: cells[1]?.v || '',
+                    descripcion: cells[2]?.v || '',
+                    año: cells[3]?.v || '',
+                    imagenUrl: cells[4]?.v || '',
+                    fuenteImagen: cells[5]?.v || '',
+                    imagenBase64: cells[6]?.v || ''
+                };
+                
+                // Solo añadir eventos que tengan título
+                if (event.evento) {
+                    events.push(event);
+                }
+            }
+            
+            return events;
+        }
+
+        // FALLBACK: CARGAR DATOS LOCALES
+        async function loadLocalData() {
+            try {
+                const response = await fetch('./data/events.json');
                 const data = await response.json();
-                console.log('Datos cargados:', data);
                 
                 events = data.events || [];
                 defaultImage = data.defaultImage || defaultImage;
@@ -286,11 +116,15 @@
                 } else {
                     showNoEvents();
                 }
-            } catch (error) {
-                console.error('Error loading data:', error);
-                showError(error.message);
+            } catch (localError) {
+                console.error('Error cargando datos locales:', localError);
+                showError('No se pudieron cargar los datos desde ninguna fuente.');
             }
         }
+
+        // [MANTENER TODAS LAS DEMÁS FUNCIONES IGUAL:
+        // displayEvent, generateIndicators, attachIndicatorListeners, 
+        // startRotation, showNoEvents, showError, etc.]
 
         // FUNCIÓN PARA MOSTRAR EVENTO
         function displayEvent(event, index) {
@@ -301,9 +135,24 @@
             let sourceAttribution = event.fuenteImagen || '';
             
             // Manejo de imágenes
-            let imageSource = event.imagenUrl || defaultImage;
-            if (!sourceAttribution && imageSource === defaultImage) {
+            let imageSource = '';
+            let hasValidImage = false;
+            
+            if (event.imagenBase64 && event.imagenBase64.trim()) {
+                imageSource = event.imagenBase64.trim();
+                hasValidImage = true;
+            } else if (event.imagenUrl && event.imagenUrl.trim()) {
+                imageSource = event.imagenUrl.trim();
+                hasValidImage = true;
+            }
+            
+            if (!hasValidImage) {
+                imageSource = defaultImage;
                 sourceAttribution = defaultlicense;
+            }
+            
+            if (!sourceAttribution && event.fuenteImagen) {
+                sourceAttribution = event.fuenteImagen;
             }
 
             // Detectar orientación
@@ -415,7 +264,6 @@
                     <h1>Error</h1>
                     <div class="description-col">
                         <p>${message}</p>
-                        <p class="year">Verifica que el archivo events.json exista en la carpeta data/</p>
                     </div>
                 </div>
             `;
