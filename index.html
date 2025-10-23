@@ -311,7 +311,9 @@
 defaultConfig = rows.find(row => row.dia === "0" && row.mes === "0");
 
 events = rows.filter(row => {
-    const isNotConfig = row.dia !== "0";
+    if (!row.dia || !row.mes) return false;
+    
+    const isNotConfig = row.dia.toString().trim() !== "0";
     const isToday = row.dia.toString().trim() === todayDay && row.mes.toString().trim() === todayMonth;
     
     console.log('Fila:', row.dia, row.mes, '| Hoy:', todayDay, todayMonth, '| Coincide:', isToday);
