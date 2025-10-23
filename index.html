@@ -287,7 +287,26 @@
         let currentIndex = 0;
         let rotationInterval;
 
-        async function loadData() {
+       async function loadData() {
+    try {
+        const response = await fetch(SHEET_URL);
+        const tsvData = await response.text();
+        const rows = parseTSV(tsvData);
+        
+        // FILTRAR POR FECHA ACTUAL
+        const today = new Date();
+        const todayDay = today.getDate().toString();
+        const todayMonth = (today.getMonth() + 1).toString();
+        
+        console.log('Hoy es:', todayDay + '/' + todayMonth);
+        console.log('Todos los registros:', rows);
+        
+        // Separar configuración (día 0) y eventos de hoy
+        defaultConfig = rows.find(row => row.dia === "0" && row.mes === "0");
+        events = rows.filter(row => row.dia !== "0" && row.dia === todayDay && row.mes === todayMonth);
+        
+        console.log('Configuración (día 0):', defaultConfig);
+        console.log('Eventos de hoy encontrados:', events);
             try {
                 const response = await fetch(SHEET_URL);
                 const tsvData = await response.text();
